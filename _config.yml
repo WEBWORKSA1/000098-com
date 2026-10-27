@@ -1,0 +1,8 @@
+title: "000098"
+description: "The #000098 Color Lab: every hex color decoded, free color tools, palettes and guides."
+url: "https://000098.com"
+exclude:
+  - _build
+  - README.md
+  - PROMPTS.md
+  - node_modules

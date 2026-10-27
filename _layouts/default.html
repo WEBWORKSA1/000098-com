@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+{% if page.basefix %}<script>document.write('<base href="'+(location.hostname.slice(-10)==='.github.io'?'/000098-com/':'/')+'">')</script>{% endif %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title | escape }}</title>
+<meta name="description" content="{{ page.description | escape }}">
+<link rel="canonical" href="https://000098.com/{{ page.url | remove_first: '/' }}">
+<meta name="robots" content="{{ page.robots | default: 'index,follow,max-image-preview:large' }}">
+<meta name="google-adsense-account" content="ca-pub-6620975821265271">
+<meta name="theme-color" content="#000098">
+<meta property="og:type" content="website"><meta property="og:site_name" content="000098">
+<meta property="og:title" content="{{ page.title | escape }}"><meta property="og:description" content="{{ page.description | escape }}"><meta property="og:url" content="https://000098.com/{{ page.url | remove_first: '/' }}">
+<meta property="og:image" content="https://000098.com/assets/img/og.svg"><meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="{{ page.root }}favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="{{ page.root }}site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ page.root }}assets/css/site.css">
+{% unless page.noads %}<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6620975821265271" crossorigin="anonymous"></script>{% endunless %}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"000098","alternateName":"000098 Color Lab","url":"https://000098.com/","potentialAction":{"@type":"SearchAction","target":"https://000098.com/color/?hex={hex}","query-input":"required name=hex"}}</script>
+{% if page.schema %}<script type="application/ld+json">{{ page.schema }}</script>{% endif %}
+
+</head>
+<body data-root="{{ page.root }}">
+<a class="skip" href="#main">Skip to content</a>
+<div class="topbar">Contact, if you are interested in this website / domain name / Sponsorship / Advertisement / Partnership — <a href="https://web.works/contact" rel="noopener" target="_blank">web.works/contact</a></div>
+<header class="site-head"><div class="wrap head-in" style="position:relative">
+<a class="brand" href="{{ page.root }}index.html" aria-label="000098 home"><span class="brand-chip" aria-hidden="true"></span><span>000098<small>The #000098 Color Lab</small></span></a>
+<button class="menu-btn" aria-expanded="false" aria-controls="nav">Menu</button>
+<nav class="nav" id="nav" aria-label="Main">
+<a href="{{ page.root }}color/index.html">Colors</a><a href="{{ page.root }}tools/index.html">Tools</a><a href="{{ page.root }}palettes.html">Palettes</a><a href="{{ page.root }}learn/index.html">Learn</a><a href="{{ page.root }}videos.html">Videos</a><a href="{{ page.root }}support.html">Support</a><a class="cta" href="{{ page.root }}services.html">Get a quote</a>
+</nav></div></header>
+<main id="main">
+{{ content }}
+</main>
+<footer class="site-foot"><div class="wrap">
+<div class="foot-grid">
+<div><a class="brand" href="{{ page.root }}index.html" style="color:#fff"><span class="brand-chip" aria-hidden="true"></span><span>000098<small style="color:#9a9db8">The #000098 Color Lab</small></span></a>
+<p style="margin-top:14px">Free color codes, conversions, palettes and accessibility tools for designers, developers and marketers. Every hex. Every format.</p>
+<form class="hexsearch" data-root="{{ page.root }}" role="search" style="display:flex;gap:8px"><label class="hp" for="fq">Find a color</label><input id="fq" placeholder="Hex or name, e.g. 000098" aria-label="Hex code or color name"><button class="btn sm light" type="submit">Find</button></form></div>
+<div><h4>Explore</h4><ul><li><a href="{{ page.root }}color/000098.html">#000098</a></li><li><a href="{{ page.root }}color/index.html">Color library</a></li><li><a href="{{ page.root }}palettes.html">Palettes</a></li><li><a href="{{ page.root }}learn/index.html">Guides</a></li><li><a href="{{ page.root }}videos.html">Videos</a></li></ul></div>
+<div><h4>Tools</h4><ul><li><a href="{{ page.root }}tools/converter.html">Converter</a></li><li><a href="{{ page.root }}tools/contrast-checker.html">Contrast checker</a></li><li><a href="{{ page.root }}tools/palette-generator.html">Palette generator</a></li><li><a href="{{ page.root }}tools/gradient-generator.html">Gradient generator</a></li><li><a href="{{ page.root }}tools/image-color-picker.html">Image color picker</a></li><li><a href="{{ page.root }}tools/color-blindness-simulator.html">Color blindness simulator</a></li></ul></div>
+<div><h4>Work with us</h4><ul><li><a href="{{ page.root }}services.html">Design services</a></li><li><a href="{{ page.root }}sponsor.html">Sponsor &amp; advertise</a></li><li><a href="{{ page.root }}contests.html">Contests</a></li><li><a href="{{ page.root }}careers.html">Careers</a></li><li><a href="{{ page.root }}support.html">Support us</a></li></ul></div>
+<div><h4>Company</h4><ul><li><a href="{{ page.root }}about.html">About</a></li><li><a href="{{ page.root }}contact.html">Contact</a></li><li><a href="{{ page.root }}privacy.html">Privacy</a></li><li><a href="{{ page.root }}terms.html">Terms</a></li><li><a href="{{ page.root }}disclaimer.html">Disclaimer</a></li><li><a href="{{ page.root }}cookies.html">Cookies</a></li><li><a href="{{ page.root }}accessibility.html">Accessibility</a></li><li><a href="{{ page.root }}trademark.html">Trademark &amp; copyright</a></li></ul></div>
+</div>
+<div class="legal">© 2026 000098.com. All rights reserved. "000098" is used here as a hexadecimal color value (#000098) and a domain name; it is not a claim to any trademark, product code, ticker or registration held by others. Third-party names and marks belong to their owners and are mentioned for identification only. Color values are computed approximations and may render differently across screens and print processes. <a href="{{ page.root }}trademark.html">Full trademark &amp; copyright disclosure</a>.</div>
+</div></footer>
+<script src="{{ page.root }}assets/js/color.js"></script>
+<script src="{{ page.root }}assets/js/site.js"></script>
+{{ page.scripts }}
+</body>
+</html>

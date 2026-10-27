@@ -1,0 +1,41 @@
+---
+layout: "default"
+title: "Modern CSS color: hex, rgb(), hsl(), lab(), oklch() and color-mix() | 000098"
+description: "A developer guide to every CSS color format, when to use OKLCH, how color-mix() works and how to build accessible themes with them."
+root: "../"
+schema: "[{\"@context\":\"https://schema.org\",\"@type\":\"Article\",\"headline\":\"Modern CSS color: hex, rgb(), hsl(), lab(), oklch() and color-mix()\",\"description\":\"A developer guide to every CSS color format, when to use OKLCH, how color-mix() works and how to build accessible themes with them.\",\"datePublished\":\"2026-09-30\",\"dateModified\":\"2026-09-30\",\"author\":{\"@type\":\"Organization\",\"name\":\"000098\"},\"publisher\":{\"@type\":\"Organization\",\"name\":\"000098\",\"url\":\"https://000098.com/\"},\"mainEntityOfPage\":\"https://000098.com/learn/modern-css-color-formats-oklch.html\"},{\"@context\":\"https://schema.org\",\"@type\":\"BreadcrumbList\",\"itemListElement\":[{\"@type\":\"ListItem\",\"position\":1,\"name\":\"Home\",\"item\":\"https://000098.com/\"},{\"@type\":\"ListItem\",\"position\":2,\"name\":\"Learn\",\"item\":\"https://000098.com/learn/index.html\"},{\"@type\":\"ListItem\",\"position\":3,\"name\":\"Modern CSS color: hex, rgb(), hsl(), lab(), oklch() and color-mix()\",\"item\":\"https://000098.com/learn/modern-css-color-formats-oklch.html\"}]}]"
+---
+{% raw %}<div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="../index.html">Home</a> / <a href="../learn/index.html">Learn</a> / Modern CSS color: hex, rgb(), hsl(), lab(), oklch() and color-mix()</nav></div><article class="sec" style="padding-top:10px"><div class="wrap" style="max-width:860px"><div class="article">
+<h1 style="font-size:clamp(1.9rem,4vw,2.8rem)">Modern CSS color: hex, rgb(), hsl(), lab(), oklch() and color-mix()</h1><p class="muted small">By the 000098 editorial team · Updated <time datetime="2026-09-30">September 30, 2026</time> · 8 min read</p>
+<nav class="toc" aria-label="Contents"><b>Contents</b><ol><li><a href="#hex">Hex and rgb()</a></li><li><a href="#hsl">hsl()</a></li><li><a href="#lab">lab() and lch()</a></li><li><a href="#oklch">oklch(): the practical choice for design systems</a></li><li><a href="#mix">color-mix()</a></li><li><a href="#fallback">Fallbacks</a></li><li><a href="#tools">Get the values</a></li></ol></nav>
+
+<p>CSS now supports far more than hex codes. Modern browsers understand perceptual color spaces and can mix colors natively. Here is what each format is good for.</p>
+<h2 id="hex">Hex and rgb()</h2>
+<p><code>#000098</code> and <code>rgb(0 0 152)</code> describe the same sRGB color. Modern syntax drops commas and accepts alpha with a slash: <code>rgb(0 0 152 / 50%)</code>. Use these for compatibility and for values copied from design tools.</p>
+<h2 id="hsl">hsl()</h2>
+<p><code>hsl(240 100% 29.8%)</code> is the same color again, expressed as hue, saturation and lightness. HSL is easy to tweak by hand, but its lightness is not perceptual: a yellow and a blue at 50% lightness look very different in brightness.</p>
+<h2 id="lab">lab() and lch()</h2>
+<p>CIE Lab and its polar form LCh are designed around human perception. Equal numeric changes look roughly equal. They also describe colors outside sRGB, useful for wide-gamut displays.</p>
+<h2 id="oklch">oklch(): the practical choice for design systems</h2>
+<p>OKLCH is a refinement of LCh with more even hue behaviour. #000098 is roughly <code>oklch(30.7% 0.213 264)</code>. Because lightness is perceptual, you can build a scale by stepping L while keeping chroma and hue fixed, and get visually even steps. It is supported in all current major browsers.</p>
+<pre><code>:root {
+  --brand-l: 30.7%;
+  --brand: oklch(var(--brand-l) 0.213 264);
+  --brand-soft: oklch(92% 0.04 264);
+}</code></pre>
+<h2 id="mix">color-mix()</h2>
+<p><code>color-mix()</code> blends two colors in a chosen space, which is perfect for hover states and tints without hard-coding values:</p>
+<pre><code>.button:hover {
+  background: color-mix(in oklch, var(--brand) 85%, white);
+}</code></pre>
+<p>Mixing in OKLCH avoids the grayish midpoints you sometimes get when mixing in sRGB.</p>
+<h2 id="fallback">Fallbacks</h2>
+<p>For older browsers, declare a hex fallback first and the modern value second; browsers ignore what they do not understand.</p>
+<pre><code>color: #000098;
+color: oklch(30.7% 0.213 264);</code></pre>
+<h2 id="tools">Get the values</h2>
+<p>Every color page on 000098 lists HEX, RGB, HSL, Lab, LCh and OKLCH with copy buttons, and the <a href="../tools/converter.html">converter</a> accepts any of them as input.</p>
+
+</div>
+<div class="leadband" style="margin-top:24px"><div><h2>Want this applied to your brand?</h2><p>Get an accessible palette, tokens and a style guide built for you.</p></div><div><a class="btn light" href="../services.html">Get a free quote</a></div></div>
+<h2 style="margin-top:40px">Keep reading</h2><div class="tiles"><a class="tile" href="hex-color-codes-explained.html"><h3>Hex color codes explained: how #000098 and every other code works</h3><p>A plain-English guide to hexadecimal color codes: what the six digits mean, how to read them, shorthand, alpha and how to convert to RGB.</p></a><a class="tile" href="color-theory-basics.html"><h3>Color theory basics for designers and marketers</h3><p>The color wheel, harmonies, value and saturation, and the 60-30-10 rule, explained with practical examples you can apply today.</p></a><a class="tile" href="wcag-color-contrast-guide.html"><h3>WCAG color contrast: a practical guide to accessible colors</h3><p>What contrast ratios mean, the AA and AAA thresholds in WCAG 2.2, how they are calculated and how to fix colors that fail.</p></a><a class="tile" href="color-psychology-in-marketing.html"><h3>Color psychology in marketing: what the evidence actually says</h3><p>How color influences recognition, attention and perception in branding and conversion, which claims are myths, and how to test colors properly.</p></a></div></div></article>{% endraw %}

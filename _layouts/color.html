@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- assign H = page.hex | upcase | prepend: '#' -%}
+{%- capture q1 %}What color is {{ H }}?{% endcapture -%}
+{%- capture q2 %}What is the RGB value of {{ H }}?{% endcapture -%}{%- capture a2 %}{{ H }} is {{ page.rgb }} on a 0–255 scale per channel.{% endcapture -%}
+{%- capture q3 %}What is {{ H }} in CMYK for print?{% endcapture -%}{%- capture a3 %}A direct conversion gives {{ page.cmyk }}. Screen-to-print conversion depends on the paper and ICC profile, so ask your printer for a proof before a large run.{% endcapture -%}
+{%- capture q4 %}What text color works on {{ H }}?{% endcapture -%}{%- capture a4 %}Use #{{ page.text_on | upcase }}. It gives a contrast ratio of {{ page.ratio }}:1, {{ page.level }}{% endcapture -%}
+{%- capture q5 %}What is the complementary color of {{ H }}?{% endcapture -%}{%- capture a5 %}Rotating the hue 180° gives #{{ page.comp | upcase }}. Triadic partners are #{{ page.tri[0] | upcase }} and #{{ page.tri[1] | upcase }}.{% endcapture -%}
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":{{ q1 | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ page.about | jsonify }}}},{"@type":"Question","name":{{ q2 | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ a2 | jsonify }}}},{"@type":"Question","name":{{ q3 | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ a3 | jsonify }}}},{"@type":"Question","name":{{ q4 | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ a4 | jsonify }}}},{"@type":"Question","name":{{ q5 | jsonify }},"acceptedAnswer":{"@type":"Answer","text":{{ a5 | jsonify }}}}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://000098.com/"},{"@type":"ListItem","position":2,"name":"Colors","item":"https://000098.com/color/"},{"@type":"ListItem","position":3,"name":{{ H | jsonify }},"item":"https://000098.com/{{ page.url | remove_first: '/' }}"}]}</script>
+<div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="{{ page.root }}index.html">Home</a> / <a href="{{ page.root }}color/index.html">Colors</a> / {{ H }}</nav></div>
+<div id="cstatic">
+<section class="swatch-hero{% if page.text_on == '000000' %} light{% endif %}" style="background:{{ H }}"><div class="wrap"><p class="hex">{{ H }}</p><p class="name">{{ page.name }} · {{ page.rgb }}</p></div></section>
+<section class="sec" style="padding-top:20px"><div class="wrap cols">
+<div class="panel"><h2>{{ H }} color values</h2><table class="vals"><tr><th>HEX</th><td>{{ H }}</td></tr><tr><th>RGB</th><td>{{ page.rgb }}</td></tr><tr><th>HSL</th><td>{{ page.hsl }}</td></tr><tr><th>HSV / HSB</th><td>{{ page.hsv }}</td></tr><tr><th>CMYK</th><td>{{ page.cmyk }}</td></tr><tr><th>CIE Lab</th><td>{{ page.lab }}</td></tr><tr><th>OKLCH</th><td>{{ page.oklch }}</td></tr></table></div>
+<div class="panel"><h2>About {{ H }}</h2><p>{{ page.about }}</p>{{ page.intro }}</div>
+</div></section>
+<section class="sec"><div class="wrap narrow"><h2>{{ H }} FAQ</h2><details><summary>{{ q1 }}</summary><p>{{ page.about }}</p></details><details><summary>{{ q2 }}</summary><p>{{ a2 }}</p></details><details><summary>{{ q3 }}</summary><p>{{ a3 }}</p></details><details><summary>{{ q4 }}</summary><p>{{ a4 }}</p></details><details><summary>{{ q5 }}</summary><p>{{ a5 }}</p></details></div></section>
+</div>
+<div id="cfull"></div>
+<script src="{{ page.root }}assets/js/color.js"></script>
+<script src="{{ page.root }}assets/js/hexlist.js"></script>
+<script src="{{ page.root }}assets/js/colorpage.js"></script>
+<script>(function(){try{var r=ColorPage.render('{{ page.hex }}','{{ page.root }}',{name:{{ page.name | jsonify }},intro:{{ page.intro | default: '' | jsonify }}});if(r&&r.html){document.getElementById('cfull').innerHTML=r.html;var s=document.getElementById('cstatic');s.parentNode.removeChild(s);}}catch(e){}})();</script>

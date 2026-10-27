@@ -63,6 +63,7 @@ function footer(R) {
 }
 
 function page({ title, desc, path, body, schema, noindex, extraHead = '', scripts = [], crumbs, noads }) {
+  if (process.env.JEKYLL) return jekyllPage({ title, desc, path, body, schema, noindex, scripts, crumbs, noads });
   const R = rootFor(path);
   const crumbHtml = crumbs ? `<div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="${R}index.html">Home</a> / ${crumbs.map(c => c[1] ? `<a href="${R}${c[1]}">${esc(c[0])}</a>` : esc(c[0])).join(' / ')}</nav></div>` : '';
   const bc = crumbs ? [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', ''], ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c[0], item: SITE + (c[1] || (i === crumbs.length ? path : '')) })) }] : [];
@@ -82,4 +83,34 @@ ${scripts.map(s => s.startsWith('<') ? s : `<script src="${R}${s}"></script>`).j
 `;
 }
 
-module.exports = { page, esc, rootFor, SITE };
+// Jekyll mode: emit front matter + raw body; the shared shell lives in _layouts/default.html
+function crumbParts(path, crumbs) {
+  const R = rootFor(path);
+  const html = crumbs ? `<div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="${R}index.html">Home</a> / ${crumbs.map(c => c[1] ? `<a href="${R}${c[1]}">${esc(c[0])}</a>` : esc(c[0])).join(' / ')}</nav></div>` : '';
+  const ld = crumbs ? [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [['Home', ''], ...crumbs].map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c[0], item: SITE + (c[1] || (i === crumbs.length ? path : '')) })) }] : [];
+  return { html, ld };
+}
+function frontMatter(o) { return '---\n' + Object.keys(o).filter(k => o[k] !== undefined && o[k] !== '').map(k => k + ': ' + JSON.stringify(o[k])).join('\n') + '\n---\n'; }
+function jekyllPage({ title, desc, path, body, schema, noindex, scripts = [], crumbs, noads, layout = 'default', extra = {}, liquid = false }) {
+  const R = rootFor(path), cp = crumbParts(path, crumbs);
+  const ld = [...(schema || []), ...cp.ld];
+  const fm = frontMatter({ layout, title, description: desc, root: R, robots: noindex ? 'noindex,follow' : undefined, noads: noads ? true : undefined,
+    scripts: scripts.map(s => s.startsWith('<') ? s : `<script src="${R}${s}"></script>`).join('') || undefined, schema: ld.length ? JSON.stringify(ld.length === 1 ? ld[0] : ld) : undefined, ...extra });
+  return fm + (body ? (liquid ? cp.html + body + '\n' : '{% raw %}' + cp.html + body + '{% endraw %}\n') : '');
+}
+function jekyllLayout() {
+  const L = '{{ page.root }}';
+  let h = head({ title: '@@TITLE@@', desc: '@@DESC@@', path: 'x', schema: [] });
+  h = h.replace('<title>@@TITLE@@</title>', '<title>{{ page.title | escape }}</title>')
+    .replace('content="@@DESC@@"', 'content="{{ page.description | escape }}"').replace('<meta property="og:description" content="@@DESC@@">', '<meta property="og:description" content="{{ page.description | escape }}">')
+    .replace('<meta property="og:title" content="@@TITLE@@">', '<meta property="og:title" content="{{ page.title | escape }}">')
+    .split(SITE + 'x').join(SITE + "{{ page.url | remove_first: '/' }}")
+    .replace('<meta name="robots" content="index,follow,max-image-preview:large">', '<meta name="robots" content="{{ page.robots | default: \'index,follow,max-image-preview:large\' }}">')
+    .replace(ADSENSE, '{% unless page.noads %}' + ADSENSE + '{% endunless %}')
+    .replace('<meta charset="utf-8">', '<meta charset="utf-8">\n{% if page.basefix %}<script>document.write(\'<base href="\'+(location.hostname.slice(-10)===\'.github.io\'?\'/000098-com/\':\'/\')+\'">\')</script>{% endif %}')
+    .split('href="favicon.svg"').join(`href="${L}favicon.svg"`).split('href="site.webmanifest"').join(`href="${L}site.webmanifest"`).split('href="assets/css/site.css"').join(`href="${L}assets/css/site.css"`)
+    .replace(/<script type="application\/ld\+json">.*?<\/script>/, m => m.replace(/<\/script>$/, '</script>') + '\n{% if page.schema %}<script type="application/ld+json">{{ page.schema }}</script>{% endif %}');
+  return h + `\n<body data-root="${L}">\n${header(L)}\n<main id="main">\n{{ content }}\n</main>\n${footer(L)}\n<script src="${L}assets/js/color.js"></script>\n<script src="${L}assets/js/site.js"></script>\n{{ page.scripts }}\n</body>\n</html>\n`;
+}
+
+module.exports = { page, esc, rootFor, SITE, jekyllPage, jekyllLayout, frontMatter };
